@@ -2,19 +2,20 @@
 // see https://github.com/challenger-deep-theme/vim
 
 // colors
-$white: #f3f3f3;
-$cloud: #cbe3e7;
+$black: #2b2942;
+$black_subtle: #4b4962;
+$white: #cbe3e7;
+$white_subtle: #a6b3cc;
+$challenger: #1b182c;
+$challenger-subtle: #100e23;
+
 $cyan: #aaffe4;
 $green: #95ffa4;
 $red: #ff8080;
-$asphalt: #1e1c31;
-$asphalt-subtle: #3e3c51;
 
 // generic colors
-$background: $asphalt;
-$background-subtle: $asphalt-subtle;
-$foreground: $green;
-$accent: $cyan;
+$background: $challenger;
+$foreground: $white;
 
 // fonts
 $font-size: 14px;
@@ -24,7 +25,7 @@ $font-family: 'Roboto Mono', monospace;
 // spacing
 $GU: 16px;
 $space: $GU;
-$large-space: 2 * $GU;
+$x-space: 100px;
 
 // animations
 $ease: cubic-bezier(0.2, 1, 0.3, 1);

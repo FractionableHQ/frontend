@@ -3,17 +3,17 @@
 
 html,
 body {
-  background-color: $background;
+  background-color: $challenger;
   box-sizing: border-box;
-  color: $foreground;
-  font-family: 'Roboto Mono', monospace;
+  color: $white;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: $font-size;
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1.3em;
 }
 
 * {
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
 }
 
 h1,
@@ -22,15 +22,18 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'PixelMix', monospace;
-  color: $accent;
+  color: $green;
   line-height: 1em;
   padding: 0;
   margin: 0;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 1rem;
 }
 
 p {
@@ -42,14 +45,14 @@ p {
 }
 
 a {
-  color: $accent;
+  color: $cyan;
   text-decoration: none;
   padding: $space / 2;
 
   &:hover {
     font-weight: bold;
-    background-color: $accent;
-    color: $asphalt;
+    background-color: $cyan;
+    color: $black;
   }
 }
 
@@ -94,18 +97,18 @@ ul {
   margin-left: $space;
 }
 
-.large-space-top {
-  margin-top: $large-space;
+.x-space-top {
+  margin-top: $x-space;
 }
 
-.large-space-right {
-  margin-right: $large-space;
+.x-space-right {
+  margin-right: $x-space;
 }
 
-.large-space-bottom {
-  margin-bottom: $large-space;
+.x-space-bottom {
+  margin-bottom: $x-space;
 }
 
-.large-space-left {
-  margin-left: $large-space;
+.x-space-left {
+  margin-left: $x-space;
 }

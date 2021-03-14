@@ -1,28 +1,48 @@
 <script>
-  import { goto } from "@sapper/app";
-  import { Menu, Button } from "../components";
+  import { ASCII, Header, Square } from "../components";
+  import { fly } from 'svelte/transition';
+  
+  let typed = false
 </script>
 
 <style lang="scss">
-  section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+  .emphasize {
+    background-color: $cyan;
+    color: $black;
+    font-weight: bold;
+    padding: 0px calc(1em / 3);
+    width: fit-content;
+  }
+
+  .icons {
+    position: relative;
+
+    img {
+      height: 35px;
+      
+      &.twitter {
+        margin-left: $GU;
+        position: relative;
+        top: -2px;
+      }
+    }
   }
 </style>
 
 
-<h1>Fractionable</h1>
-<h2 class="space-top">» Where collectibles meet DeFi</h2>
-
-<ul class="large-space-top large-space-bottom">
-  <li><span class="bold">Artists.</span> Fractionate NFTs into fungible ERC20s.</li>
-  <li><span class="bold">Owners.</span> Own a share of NFTs or gain exposure to community curated NFTs indexes.</li>
-  <li><span class="bold">Developers.</span> Use NFTs shares as collateral in any DeFi protocol.</li>
-</ul>
-
-<section>
-  <Button class="space-right">explore</Button>
-  <Button>fractionate</Button>
-</section>
+<Header on:done={() => typed = true }/>
+{#if typed}
+  <div transition:fly={{ y: 200, duration: 2000, delay: 600 }}>
+    <ul>
+      <li><span class="emphasize">Artists</span> Fractionalize your NFTs into fungible spectre ERC20s and pre-allocate some to yourself to benefit from your upcoming work appreciation.</li>
+      <li><span class="emphasize">Owners</span> Own shares of NFTs to gain exposure to exclusive artworks or community-curated NFTs indexes.</li>
+      <li><span class="emphasize">Traders</span> Track the market dynamics of artworks or artists block per block.</li>
+      <li><span class="emphasize">Developers</span> Use NFTs spectres as collaterals in any DeFi protocol.</li>
+    </ul>
+    <ASCII class="x-space-top" message="SPECTRE_IS_COMING" />
+    <div class="icons x-space-top">
+      <img class="discord" src="/img/discord.svg" alt="discord" >
+      <img class="twitter" src="/img/twitter.svg" alt="twitter" >
+    </div>
+  </div>
+{/if}

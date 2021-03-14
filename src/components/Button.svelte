@@ -1,6 +1,7 @@
 <script>
-  let _class
   export { _class as class };
+
+  let _class
 </script>
 
 <style lang="scss">
@@ -14,12 +15,12 @@
     outline: inherit;
 
     // style
-    background: $foreground;
-    color: $background;
+    background: $green;
+    color: $black;
     padding: $GU;
 
     &:hover {
-      background: $accent;
+      background: $cyan;
     }
   }
 </style>

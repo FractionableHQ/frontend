@@ -1,15 +1,14 @@
 <style lang="scss">
   main {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    max-width: 1500px;
-    width: fit-content;
     padding: $GU;
     margin: auto;
-    min-height: calc(100vh -  10 * #{$GU} - 2 * #{$GU});
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+
+    @media only screen and (min-width: 980px) {
+      max-width: 980px;
+    }
   }
 </style>
 
