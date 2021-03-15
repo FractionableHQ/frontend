@@ -32,9 +32,9 @@
 
 <Header on:done={() => typed = true }/>
 {#if typed}
-  <div transition:fly={{ y: 200, duration: 2000, delay: 600 }}>
+  <div transition:fly={{ y: 100, duration: 600 }}>
     <ul>
-      <li><span class="emphasize">Artists</span> Fractionalize your NFTs into fungible spectre ERC20s and pre-allocate some to yourself to benefit from your upcoming work appreciation.</li>
+      <li><span class="emphasize">Artists</span> Spectralize your NFTs into fungible ERC20s and pre-allocate some to yourself to benefit from your upcoming work appreciation.</li>
       <li><span class="emphasize">Owners</span> Own shares of NFTs to gain exposure to exclusive artworks or community-curated NFTs indexes.</li>
       <li><span class="emphasize">Traders</span> Track the market dynamics of artworks or artists block per block.</li>
       <li><span class="emphasize">Developers</span> Use NFTs spectres as collaterals in any DeFi protocol.</li>

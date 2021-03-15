@@ -1,81 +1,62 @@
+import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
+import url from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
+import preprocess from 'svelte-preprocess';
 import pkg from './package.json';
-import scsss from 'rollup-plugin-scss';
-const preprocess = require('svelte-preprocess');
-const rootImport = require('rollup-plugin-root-import');
-import { scss, postcss } from 'svelte-preprocess';
-import alias from '@rollup/plugin-alias';
-
-import { mdsvex } from 'mdsvex';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
+
+const _preprocess = {
+  scss: {
+    includePaths: ['src/styles'],
+    prependData: `@import 'src/styles/variables.scss'; @import 'src/styles/mixins.scss';`,
+  },
+  postcss: {
+    plugins: [require('autoprefixer')()],
+  },
+};
 
 const onwarn = (warning, onwarn) =>
   (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
   (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
   onwarn(warning);
 
-// const preprocess = [
-// 	scss({
-// 		includePaths: ['src/styles'],
-// 		data: `@import 'src/styles/variables.scss';@import 'src/styles/mixins.scss';`
-// 	}),
-// 	postcss({
-// 		plugins: [require('autoprefixer')]
-// 	})
-// ]
-
 export default {
   client: {
     input: config.client.input(),
     output: config.client.output(),
     plugins: [
-      // scsss({
-      // 	// update includePaths to what suits.
-      // 	// node_modules is probably only necessary if you need to import from a css library
-      // 	includePaths: ['src/styles'],
-      // 	output: 'static/global.css'
-      // }),
       replace({
-        'process.browser': true,
-        'process.env.NODE_ENV': JSON.stringify(mode),
-      }),
-      alias({
-        entries: [{ find: '@styles', replacement: './src/styles' }],
+        preventAssignment: true,
+        values: {
+          'process.browser': true,
+          'process.env.NODE_ENV': JSON.stringify(mode),
+        },
       }),
       svelte({
-        dev,
-        hydratable: true,
-        emitCss: true,
-        css: (css) => {
-          css.write('public/bundle.css');
+        compilerOptions: {
+          dev,
+          hydratable: true,
         },
-        preprocess: preprocess({
-          scss: {
-            // update includePaths to what suits.
-            // node_modules is probably only necessary if you need to import from a css library
-            includePaths: ['src/styles'],
-            data: `@import 'src/styles/variables.scss';@import 'src/styles/mixins.scss';`,
-          },
-          postcss: {
-            plugins: [require('autoprefixer')()],
-          },
-        }),
+        preprocess: preprocess(_preprocess),
+      }),
+      url({
+        sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
+        publicPath: '/client/',
       }),
       resolve({
         browser: true,
         dedupe: ['svelte'],
       }),
       commonjs(),
-
       legacy &&
         babel({
           extensions: ['.js', '.mjs', '.html', '.svelte'],
@@ -99,7 +80,6 @@ export default {
             ],
           ],
         }),
-
       !dev &&
         terser({
           module: true,
@@ -114,41 +94,26 @@ export default {
     input: config.server.input(),
     output: config.server.output(),
     plugins: [
-      // scsss({
-      //   // update includePaths to what suits.
-      //   // node_modules is probably only necessary if you need to import from a css library
-      //   includePaths: ['src/styles'],
-      //   output: 'static/global.css',
-      // }),
       replace({
-        'process.browser': false,
-        'process.env.NODE_ENV': JSON.stringify(mode),
-      }),
-      alias({
-        entries: [{ find: '@styles', replacement: './src/styles' }],
+        preventAssignment: true,
+        values: {
+          'process.browser': false,
+          'process.env.NODE_ENV': JSON.stringify(mode),
+        },
       }),
       svelte({
-        generate: 'ssr',
-        hydratable: true,
-        extensions: ['.svelte', '.svx'],
-
-        dev,
-        // preprocess,
-
-        hydratable: true,
-        emitCss: true,
-
-        preprocess: preprocess({
-          scss: {
-            // update includePaths to what suits.
-            // node_modules is probably only necessary if you need to import from a css library
-            includePaths: ['src/styles'],
-            data: `@import 'src/styles/variables.scss';@import 'src/styles/mixins.scss';`,
-          },
-          postcss: {
-            plugins: [require('autoprefixer')()],
-          },
-        }),
+        compilerOptions: {
+          dev,
+          generate: 'ssr',
+          hydratable: true,
+        },
+        emitCss: false,
+        preprocess: preprocess(_preprocess),
+      }),
+      url({
+        sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
+        publicPath: '/client/',
+        emitFiles: false, // already emitted by client build
       }),
       resolve({
         dedupe: ['svelte'],
@@ -156,7 +121,6 @@ export default {
       commonjs(),
     ],
     external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
-
     preserveEntrySignatures: 'strict',
     onwarn,
   },
@@ -167,13 +131,15 @@ export default {
     plugins: [
       resolve(),
       replace({
-        'process.browser': true,
-        'process.env.NODE_ENV': JSON.stringify(mode),
+        preventAssignment: true,
+        values: {
+          'process.browser': true,
+          'process.env.NODE_ENV': JSON.stringify(mode),
+        },
       }),
       commonjs(),
       !dev && terser(),
     ],
-
     preserveEntrySignatures: false,
     onwarn,
   },

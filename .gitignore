@@ -1,6 +1,10 @@
-.DS_Store
+# npm
 /node_modules/
-/src/node_modules/@sapper/
-yarn-error.log
-/cypress/screenshots/
+
+# sapper
 /__sapper__/
+/src/node_modules/@sapper/
+
+# macOS shit
+.DS_Store
+

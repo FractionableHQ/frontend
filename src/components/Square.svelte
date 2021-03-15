@@ -123,6 +123,6 @@ import { fade } from 'svelte/transition';
   }
 </style>
 
-<div transition:fade={{duration: 2000, delay: 200 }} id="square" use:square style="height: {height}px; width: {width}px; font-size: {em}px; line-height: {em}px; overflow: hidden;">
+<div transition:fade={{duration: 2500 }} id="square" use:square style="height: {height}px; width: {width}px; font-size: {em}px; line-height: {em}px; overflow: hidden;">
 
 </div>
