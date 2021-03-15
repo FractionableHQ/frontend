@@ -1,7 +1,9 @@
 {
-  "name": "TODO",
-  "description": "TODO",
-  "version": "0.0.1",
+  "name": "@spectrexyz/website",
+  "version": "1.0.0",
+  "private": true,
+  "author": "spectre.xyz",
+  "homepage": "https://github.com/spectrexyz/website",
   "scripts": {
     "dev": "npx sapper dev",
     "build": "npx sapper build",
